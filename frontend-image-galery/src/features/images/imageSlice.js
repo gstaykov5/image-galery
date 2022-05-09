@@ -3,6 +3,7 @@ import imageService from '../../service/image.service';
 
 const initialState = {
     images: [],
+    favorites: [1],
     status: 'idle',
 }
 
@@ -18,7 +19,14 @@ export const fetchImages = createAsyncThunk(
 const imageSlice = createSlice({
     name: 'galery',
     initialState,
-    reducer: {},
+    reducers: {
+        addTofavorite: (state, action) => {
+            state.favorites.push(action.payload);
+        },
+        removeFromFavorite: (state, action) => {
+            state.favorites.pop(action.payload);
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchImages.pending, (state, action) => {
@@ -32,9 +40,13 @@ const imageSlice = createSlice({
                 state.status = 'rejected';
                 state.images = action.payload;
             })
+
     }
 })
 
+export const { addTofavorite, removeFromFavorite } = imageSlice.actions;
+
 export const selectImages = (state) => state.galery.images;
+export const selectFavorites = (state) => state.galery.favorites;
 
 export default imageSlice.reducer;
