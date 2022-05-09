@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Pagination, Typography } from '@mui/material';
@@ -7,6 +6,8 @@ import { fetchImages, selectImages } from '../../../features/images/imageSlice';
 import { Box } from '@mui/system';
 
 import pagination from './pagination';
+import Progress from '../../layout/progress/Progress';
+import { Link } from 'react-router-dom';
 
 const Albums = () => {
   const images = useSelector(selectImages);
@@ -59,21 +60,29 @@ const Albums = () => {
         />
         <Grid container spacing={4}>
           {useAlbums.currentAlbums().map((album, i) => (
-            <Grid item key={i} xs={12} sm={6} md={4}>
+            <Grid item key={i} xs={12} sm={6} md={4} sx={{mb: 1.5}}>
+              {!album && <Progress />}
               <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-              >
-                <CardMedia
-                  component="img"
-                  image={album[0].url}
-                />
+                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }} >
+                <Link to={`/album/${album[0].albumId}/images`}>
+                  <CardMedia
+                    component="img"
+                    image={album[0].url}
+                  />
+                </Link>
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
                     Album #{album[0].albumId}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">View Images</Button>
+                  <Button
+                    size="small"
+                    component={Link}
+                    to={`/album/${album[0].albumId}/images`}
+                    >
+                      View Images
+                    </Button>
                 </CardActions>
               </Card>
             </Grid>
