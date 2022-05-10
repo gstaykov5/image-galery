@@ -3,7 +3,8 @@ import imageService from '../../service/image.service';
 
 const initialState = {
     images: [],
-    favorites: [1],
+    favorites: [],
+    favoritesAsObjects: [],
     status: 'idle',
 }
 
@@ -20,12 +21,18 @@ const imageSlice = createSlice({
     name: 'galery',
     initialState,
     reducers: {
-        addTofavorite: (state, action) => {
+        addToFavorite: (state, action) => {
             state.favorites.push(action.payload);
         },
         removeFromFavorite: (state, action) => {
-            state.favorites.pop(action.payload);
-        }
+            state.favorites.splice(action.payload, 1);
+        },
+        addToFavoriteAsObject: (state, action) => {
+            state.favoritesAsObjects.push(action.payload);
+        },
+        removeFromFavoriteasObject: (state, action) => {
+            state.favoritesAsObjects.splice(action.payload, 1);
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -44,9 +51,10 @@ const imageSlice = createSlice({
     }
 })
 
-export const { addTofavorite, removeFromFavorite } = imageSlice.actions;
+export const { addToFavorite, removeFromFavorite, addToFavoriteAsObject, removeFromFavoriteasObject } = imageSlice.actions;
 
 export const selectImages = (state) => state.galery.images;
 export const selectFavorites = (state) => state.galery.favorites;
+export const selectFavoritesAsObjects = (state) => state.galery.favoritesAsObjects;
 
 export default imageSlice.reducer;

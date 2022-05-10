@@ -64,10 +64,11 @@ const Albums = () => {
               {!album && <Progress />}
               <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }} >
-                <Link to={`/album/${album[0].albumId}/images`}>
+                <Link to={`album/${album[0].albumId}/images`}>
                   <CardMedia
                     component="img"
                     image={album[0].url}
+                    loading="lazy"
                   />
                 </Link>
                 <CardContent sx={{ flexGrow: 1 }}>
@@ -79,7 +80,7 @@ const Albums = () => {
                   <Button
                     size="small"
                     component={Link}
-                    to={`/album/${album[0].albumId}/images`}
+                    to={`album/${album[0].albumId}/images`}
                     >
                       View Images
                     </Button>

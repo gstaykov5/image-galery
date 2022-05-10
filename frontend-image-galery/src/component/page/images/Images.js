@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom';
 import LightBox from "react-awesome-lightbox";
 import "react-awesome-lightbox/build/style.css";
 
-import { Button, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
+import { Grid, IconButton, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 
-import { selectImages, selectFavorites, addTofavorite, removeFromFavorite, } from '../../../features/images/imageSlice';
+import { selectImages, selectFavorites, addToFavorite, removeFromFavorite, addToFavoriteAsObject, removeFromFavoriteasObject, selectFavoritesAsObjects, } from '../../../features/images/imageSlice';
 import Progress from '../../layout/progress/Progress';
 
 const Images = () => {
@@ -35,12 +35,15 @@ const Images = () => {
     setShowLight(null);
   };
   
-  const handleFavorite = (imageId) => e => {
-      
+  const handleFavorite = (imageId, image) => e => {
+    const index = favorites.indexOf(Number(imageId));
+
     if(!favorites.includes(imageId)) {
-        dispatch(addTofavorite(imageId))
+        dispatch(addToFavorite(imageId));
+        dispatch(addToFavoriteAsObject(image));
     } else {
-        dispatch(removeFromFavorite(imageId))
+        dispatch(removeFromFavorite(index));
+        dispatch(removeFromFavoriteasObject(index));
     }
   }
 
@@ -74,7 +77,7 @@ const Images = () => {
           actionIcon={
               <IconButton
               sx={{ color: 'pink' }}
-              onClick={handleFavorite(image.id)}>
+              onClick={handleFavorite(image.id, image)}>
             {!favorites.includes(image.id) ? <FavoriteBorderSharpIcon /> :
             <FavoriteRoundedIcon />
             }

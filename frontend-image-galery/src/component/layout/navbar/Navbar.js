@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchInput from '../search/SearchInput';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -23,16 +24,18 @@ const Navbar = () => {
             <Typography
               variant="h6"
               noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' }, textAlign: 'left', color: 'black' }}
+              component={Link}
+              to={'/'}
+              sx={{ display: { xs: 'none', sm: 'block' }, textAlign: 'left', color: 'black', textDecoration: 'none' }}
             >
                 My Galery Collection
             </Typography>
             <Typography
               variant='h6'
               noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textAlign: 'left', color: 'black', ml: 5 }}  
+              component={Link}
+              to={'/favorites'}
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textAlign: 'left', color: 'black', ml: 5, textDecoration: 'none' }}  
             >
               Favorites
             </Typography>
